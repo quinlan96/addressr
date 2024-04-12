@@ -1,0 +1,26 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:1.2.4
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./data:/usr/share/opensearch/data
+
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+
+  addressr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - ADDRESSR_ENABLE_GEO=1
+      - NODE_OPTIONS=--max_old_space_size=8196
+      - ELASTIC_HOST=opensearch
+    

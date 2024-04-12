@@ -16,9 +16,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      tags:
+        - gitea.danktank.xyz/quinlan96/addressr:main
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8181:8080"
     environment:
       - ADDRESSR_ENABLE_GEO=1
       - NODE_OPTIONS=--max_old_space_size=8196
